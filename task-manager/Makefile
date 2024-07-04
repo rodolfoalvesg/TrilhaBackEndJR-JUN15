@@ -16,3 +16,8 @@ generate:
 start:
 	@echo "==> Starting server"
 	@go run cmd/api/main.go
+
+.PHONY
+build:
+	@echo "==> Building server"
+	@go build -o bin/api cmd/api/main.go
