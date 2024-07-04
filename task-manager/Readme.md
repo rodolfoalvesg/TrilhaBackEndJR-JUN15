@@ -1,6 +1,6 @@
 # Nome do Projeto
 
-Uma breve descrição do projeto, seus objetivos e funcionalidades principais.
+API RESTful para gerenciamento de tarefas
 
 ## Índice
 
@@ -81,7 +81,7 @@ Instruções sobre como usar o projeto:
 
 Descrição da estrutura do diretório e uma breve explicação sobre o propósito de cada pasta/arquivo.
 
-project-root/
+```project-root/
 │
 ├── app/
 ├──├── config/
@@ -107,7 +107,7 @@ project-root/
 ├── Makefile
 ├── go.mod
 └── go.sum
-
+```
 Essa estrutura de projeto em Golang segue uma organização modular e bem definida, facilitando a manutenção e a escalabilidade do código. Vamos analisar cada diretório e arquivo:
 
 #### Diretórios e Arquivos
