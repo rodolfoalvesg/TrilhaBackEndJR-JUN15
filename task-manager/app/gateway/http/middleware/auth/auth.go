@@ -3,6 +3,7 @@ package auth
 import (
 	"fmt"
 	"net/http"
+	"os"
 	"strings"
 
 	"github.com/dgrijalva/jwt-go"
@@ -26,7 +27,7 @@ func Auth(next http.Handler) http.Handler {
 				return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
 			}
 
-			return []byte("secret"), nil
+			return []byte(os.Getenv("JWT_SECRET")), nil
 		})
 
 		// Check if token is valid
@@ -36,6 +37,26 @@ func Auth(next http.Handler) http.Handler {
 			return
 		}
 
+		// Check if token is expired
+		if err := ValidateExpiration(token); err != nil {
+			w.WriteHeader(http.StatusUnauthorized)
+			w.Write([]byte("Unauthorized"))
+			return
+		}
+
 		next.ServeHTTP(w, r)
 	})
+}
+
+func ValidateExpiration(token *jwt.Token) error {
+	claims, ok := token.Claims.(jwt.MapClaims)
+	if !ok {
+		return fmt.Errorf("invalid claims")
+	}
+
+	if !claims.VerifyExpiresAt(jwt.TimeFunc().Unix(), true) {
+		return fmt.Errorf("token is expired")
+	}
+
+	return nil
 }

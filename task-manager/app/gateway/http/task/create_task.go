@@ -48,7 +48,7 @@ func (h *Handler) CreateTask(r *http.Request) responses.Response {
 	if err := h.usecase.CreateTask(r.Context(), input); err != nil {
 		log.Printf("%s: %v", operation, err)
 
-		responses.InternalServerError(err)
+		responses.InternalServerError(requests.ErrorInternalServerErr)
 	}
 
 	return responses.Created(nil)

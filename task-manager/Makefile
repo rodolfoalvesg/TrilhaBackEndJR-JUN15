@@ -17,7 +17,7 @@ start:
 	@echo "==> Starting server"
 	@go run cmd/api/main.go
 
-.PHONY
+.PHONY: build
 build:
 	@echo "==> Building server"
 	@go build -o bin/api cmd/api/main.go

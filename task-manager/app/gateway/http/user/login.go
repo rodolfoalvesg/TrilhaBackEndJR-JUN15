@@ -1,8 +1,10 @@
 package user
 
 import (
+	"errors"
 	"log"
 	"net/http"
+	"task-manager/app/domain/entities/users"
 	"task-manager/app/domain/usecases"
 	"task-manager/app/gateway/http/rest/requests"
 	"task-manager/app/gateway/http/rest/responses"
@@ -45,9 +47,15 @@ func (h Handler) Login(r *http.Request) responses.Response {
 	// Call usecase
 	token, err := h.usecase.Login(r.Context(), input)
 	if err != nil {
+		if errors.Is(err, users.ErrUserNotFound) || errors.Is(err, users.ErrInvalidPassword) {
+			log.Printf("%s: %v", operation, err)
+
+			return responses.Unauthorized(requests.ErrUnauthorized)
+		}
+
 		log.Printf("%s: %v", operation, err)
 
-		return responses.InternalServerError(err)
+		return responses.InternalServerError(requests.ErrorInternalServerErr)
 	}
 
 	header := http.Header{

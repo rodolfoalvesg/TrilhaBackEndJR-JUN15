@@ -3,6 +3,7 @@ package task
 import (
 	"log"
 	"net/http"
+	"task-manager/app/gateway/http/rest/requests"
 	"task-manager/app/gateway/http/rest/responses"
 )
 
@@ -23,7 +24,7 @@ func (h Handler) GetTasks(r *http.Request) responses.Response {
 	if err != nil {
 		log.Printf("%s: %v", operation, err)
 
-		return responses.InternalServerError(err)
+		return responses.InternalServerError(requests.ErrorInternalServerErr)
 	}
 
 	return responses.OK(nil, tasks)
