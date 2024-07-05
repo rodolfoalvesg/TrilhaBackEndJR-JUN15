@@ -25,8 +25,8 @@ Este projeto tem como objetivo desenvolver uma API RESTful para gerenciamento de
 - Git e Github (Versionamento e armazenamento de código fonte)
 
 ## Aplicação e Docs
-- Swagger:
-- Servidor:
+- Swagger: http://52.90.182.210:3000/docs/v1/task-manager/swagger/index.html#/
+- Servidor: http://52.90.182.210:3000/docs/v1/task-manager
 
 ## Instalação
 Caso não tenha instalado ainda o Golang e SQLite em sua máquina, segue as instruções. Caso contrário, pule para o passo seguinte.
@@ -188,6 +188,8 @@ Para garantir a segurança da aplicação, implementei um middleware de autoriza
 **7. Processo de Integração Contínua**
 Cada etapa do desenvolvimento foi submetida através de Pull Requests (PRs). Este processo garantiu que cada mudança fosse avaliada de forma independente, mantendo a qualidade e a integridade do código.
 
+## Deploy e Hospedagem
+A aplicação está hospedada numa instância EC2 da AWS com servidor Ubuntu.
 
 ## Licença
 
