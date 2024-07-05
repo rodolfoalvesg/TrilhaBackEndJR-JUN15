@@ -35,12 +35,12 @@ func (h *Handler) DeleteTask(r *http.Request) responses.Response {
 		if errors.Is(err, tasks.ErrTaskNotFound) {
 			log.Printf("%s: %v", operation, err)
 
-			return responses.NotFound(err)
+			return responses.NotFound(tasks.ErrTaskNotFound)
 		}
 
 		log.Printf("%s: %v", operation, err)
 
-		return responses.InternalServerError(err)
+		return responses.InternalServerError(requests.ErrorInternalServerErr)
 	}
 
 	return responses.OK(nil, nil)

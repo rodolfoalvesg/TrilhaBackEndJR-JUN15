@@ -1,6 +1,7 @@
 package task
 
 import (
+	"errors"
 	"log"
 	"net/http"
 	"task-manager/app/domain/entities/tasks"
@@ -35,14 +36,14 @@ func (h *Handler) GetTask(r *http.Request) responses.Response {
 	// Get task
 	task, err := h.usecase.GetTask(r.Context(), taskID)
 	if err != nil {
-		if err == tasks.ErrTaskNotFound {
+		if errors.Is(err, tasks.ErrTaskNotFound) {
 			log.Printf("%s: %v", operation, err)
 
-			return responses.NotFound(err)
+			return responses.NotFound(tasks.ErrTaskNotFound)
 		}
 
 		log.Printf("%s: %v", operation, err)
-		return responses.InternalServerError(err)
+		return responses.InternalServerError(requests.ErrorInternalServerErr)
 	}
 
 	return responses.OK(nil, schema.MapToTaskResponse(task))

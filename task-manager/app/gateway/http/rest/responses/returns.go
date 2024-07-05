@@ -48,3 +48,11 @@ func Conflict(err error) Response {
 		Payload: ErrConflict,
 	}
 }
+
+func Unauthorized(err error) Response {
+	return Response{
+		Status:  http.StatusUnauthorized,
+		Error:   err,
+		Payload: ErrUnauthorized,
+	}
+}

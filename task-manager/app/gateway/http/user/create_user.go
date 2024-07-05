@@ -50,11 +50,11 @@ func (h Handler) CreateUser(r *http.Request) responses.Response {
 		if errors.Is(err, users.ErrUserAlreadyExists) {
 			log.Printf("%s: %v", operation, err)
 
-			return responses.Conflict(err)
+			return responses.Conflict(users.ErrUserAlreadyExists)
 		}
 
 		log.Printf("%s: %v", operation, err)
-		return responses.InternalServerError(err)
+		return responses.InternalServerError(requests.ErrorInternalServerErr)
 	}
 
 	return responses.Created(nil)

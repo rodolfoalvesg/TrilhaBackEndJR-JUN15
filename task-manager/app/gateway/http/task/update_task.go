@@ -1,8 +1,10 @@
 package task
 
 import (
+	"errors"
 	"log"
 	"net/http"
+	"task-manager/app/domain/entities/tasks"
 	"task-manager/app/domain/usecases"
 	"task-manager/app/gateway/http/rest/requests"
 	"task-manager/app/gateway/http/rest/responses"
@@ -57,9 +59,15 @@ func (h Handler) UpdateTask(r *http.Request) responses.Response {
 
 	// Update task
 	if err := h.usecase.UpdateTask(r.Context(), input); err != nil {
+		if errors.Is(err, tasks.ErrTaskNotFound) {
+			log.Printf("%s: %v", operation, err)
+
+			return responses.NotFound(tasks.ErrTaskNotFound)
+		}
+
 		log.Printf("%s: %v", operation, err)
 
-		return responses.InternalServerError(err)
+		return responses.InternalServerError(requests.ErrorInternalServerErr)
 	}
 
 	return responses.OK(nil, nil)
